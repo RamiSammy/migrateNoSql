@@ -1,11 +1,7 @@
 //Hago conexion con mongoDB
 const mongoose = require("mongoose")
 
-const category = mongoose.Schema({
-    name : String
-})
-
-const categoryModel = mongoose.model("category" , category)
+const {categoryModel} = require("../modules/modules.js")
 
 async function mostrarCategorias() {
     const categorias = await categoryModel.find()
