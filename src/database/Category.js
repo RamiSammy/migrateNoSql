@@ -1,15 +1,5 @@
 //Hago conexion con mongoDB
 const mongoose = require("mongoose")
-const dotenv = require("dotenv")
-
-dotenv.config()
-
-mongoose.connect(process.env.MONGO_KEY , {
-    useNewUrlParser : true , 
-    useUnifiedTopology : true
-})
-.then(() => console.log("Conectado a MongoDb"))
-.catch(err => console.log(err))
 
 const category = mongoose.Schema({
     name : String
