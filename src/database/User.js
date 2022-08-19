@@ -21,7 +21,7 @@ const getOneUser = async (userId)=>{
     const user = await userModel.aggregate([  //aggregate es similar al JOIN de SQL
 
         {$match: {_id: new mongoose.Types.ObjectId(userId)}}, //Si _id es igual a ObjectId(userId) (Filtra según la id que recibe)
-        {$lookup: {from: 'posts', localField: '_id', foreignField: 'authorId', as: 'posts'}} //Obtiene de la colección 'posts', donde localField === authorId como "posts"
+        {$lookup: {from: 'posts', localField: '_id', foreignField: 'authorId', as: 'posts'}} //Obtiene de la colección 'posts', donde _id === authorId del post
 
     ])
         
