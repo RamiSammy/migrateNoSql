@@ -1,5 +1,13 @@
+const mongoose = require("mongoose")
 
 const {isNumber} = require('../regex/regex.js')
+const {postModel} = require('../modules/modules.js')
+
+async function mostrarPosts() {
+    const posts = await postModel.findOne().populate('authorId')
+    console.log(posts)
+}
+mostrarPosts()
 
 const getAllPost = async () =>  {
     try {

@@ -1,4 +1,12 @@
+const mongoose = require("mongoose")
+const {userModel} = require('../modules/modules.js')
 
+async function mostrarUsuarios() {
+    const usuarios = await userModel.aggregate([{$lookup: {from: 'posts', localField: '_id', foreignField: 'authorId', as: 'posts'}}])
+    console.log(usuarios[0])
+    console.log(usuarios[0].posts)
+}
+mostrarUsuarios()
 
 const getAllUsers = async ()=>{
 
