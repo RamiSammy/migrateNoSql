@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const {userModel} = require('../modules/modules.js')
 
+
 async function mostrarUsuarios() {
     const usuarios = await userModel.aggregate([{$lookup: {from: 'posts', localField: '_id', foreignField: 'authorId', as: 'posts'}}])
    // console.log(usuarios[0])
@@ -8,12 +9,15 @@ async function mostrarUsuarios() {
 }
 mostrarUsuarios()
 
+
 const getAllUsers = async ()=>{
 
     try{
 
-        const allUsers = await userModel.find()
-        return allUsers
+
+        const users = await userModel.find()
+        return users
+
 
     }catch(err)
     {
@@ -25,7 +29,16 @@ const getAllUsers = async ()=>{
 const getOneUser = async (userId)=>{
 
     try{
-        const user = await userModel.findById(userId).exec()
+
+    const user = await userModel.aggregate([  //aggregate es similar al JOIN de SQL
+
+        {$match: {_id: new mongoose.Types.ObjectId(userId)}}, //Si _id es igual a ObjectId(userId) (Filtra según la id que recibe)
+        {$lookup: {from: 'posts', localField: '_id', foreignField: 'authorId', as: 'posts'}} //Obtiene de la colección 'posts', donde _id === authorId del post
+
+    ])
+        
+    //Se obtiene un arreglo con los que cumplan con la condicion (Siempre va a ser uno porque buscamos por Id)
+
         return user
     }
     catch(err)
