@@ -59,12 +59,12 @@ const updatePost = async (req,res) => {
 
     const newData = req.body
 
-    if(!isNumber.test(id)){
+    if(!id){
         res.status(400).json({message: 'ERROR: Faltan Datos!!'})
     }
     else
     {
-        const edited = await postServices.updatePost(Number(id), newData)
+        const edited = await postServices.updatePost(id, newData)
 
         if(edited === undefined)
         {
@@ -81,13 +81,13 @@ const deletePost = async (req,res) => {
 
     const id = req.params.id
 
-    if(!isNumber.test(String(id)))
+    if(!id)
     {
         res.status(400).json({message: 'ERROR: Faltan Datos!!'})
     }
     else
     {
-        const deleted = await postServices.deletePost(Number(id))
+        const deleted = await postServices.deletePost(id)
 
         if(deleted===undefined)
         {

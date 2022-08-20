@@ -78,7 +78,7 @@ const updateUser = async (req, res) => {
     const { id } = req.params
     const newData = req.body
 
-    if (!isNumber.test(id)) {
+    if (!id) {
         res.status(400).json({message: 'ERROR: Faltan Datos!!'})
     }
     else {
@@ -97,7 +97,7 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     const { id } = req.params
 
-    if (!isNumber.test(id)) {
+    if (!id) {
         res.status(400).json({message: 'ERROR: Faltan Datos!!'})
     }
     else

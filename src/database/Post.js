@@ -1,7 +1,6 @@
 const mongoose = require("mongoose")
 
-const {isNumber} = require('../regex/regex.js')
-const {postModel} = require('../modules/modules.js')
+const {postModel, categoryModel} = require('../modules/modules.js')
 
 async function mostrarPosts() {
     const posts = await postModel.findOne().populate('authorId')
@@ -11,7 +10,7 @@ async function mostrarPosts() {
 
 const getAllPost = async () =>  {
     try {
-        const allPost = await postModel.find()
+        const allPost = await postModel.find().populate('authorId').populate('categoryId') //Recupera el documento que tenga la id de ese atributo
         return allPost
     } 
     catch(err) 
@@ -24,8 +23,12 @@ const createNewPost = async (newPost)=>{
     try
     {
 
-    const added = await prisma.post.create({
-        data: newPost
+    const added = await postModel.create({
+
+        title: newPost.title,
+        content: newPost.content,
+        authorId: new mongoose.Types.ObjectId(newPost.authorId),
+        categoryId: new mongoose.Types.ObjectId(newPost.categoryId)
     })
 
     return added
@@ -39,13 +42,7 @@ const createNewPost = async (newPost)=>{
 const updatePost = async (idPost, newData) => {
     try
     {
-        const updatedPost = await prisma.post.update(
-            {
-                where: {
-                    id : idPost
-                },
-                data: newData
-            })
+        const updatedPost = await postModel.findByIdAndUpdate(idPost , newData)
 
         return updatedPost
     }
@@ -55,27 +52,18 @@ const updatePost = async (idPost, newData) => {
     }
 }
 
-const deletePost = async (idPost) => {
+const deletePost = async (postId) => {
     try
     {
-        const deletedPost = await prisma.post.delete({
-            where: {
-                id: idPost
-            },
-        })
-        
+    
+        const deletedPost = await postModel.findByIdAndRemove(postId)
+          
         return deletedPost
-
-    }catch(err)
-    {
+    } 
+    catch (err) {
         console.log(err)
     }
 }
-
-
-
-
-
 
 module.exports={
     getAllPost,
