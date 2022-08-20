@@ -1,9 +1,5 @@
 const userServices = require('../services/userServices.js')
 
-const { Prisma } = require('@prisma/client')
-
-const { isNumber } = require('../regex/regex.js')
-
 const createNewUser = async (req, res) => {
 
     const { name, email, age, country, rol } = req.body

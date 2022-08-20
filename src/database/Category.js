@@ -1,15 +1,5 @@
-//Hago conexion con mongoDB
 const mongoose = require("mongoose")
-
 const {categoryModel} = require("../modules/modules.js")
-
-async function mostrarCategorias() {
-    const categorias = await categoryModel.find()
-    console.log(categorias)
-}
-//mostrarCategorias()
-
-
 
 async function readCategories()
 {

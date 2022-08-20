@@ -1,16 +1,4 @@
 const postServices = require('../services/postServices.js')
-const {Prisma} = require('@prisma/client')
-
-const {isNumber} = require('../regex/regex.js')
-
-/*
-id        Int      @id @default(autoincrement())
-  title     String?
-  content   String
-  createdAt DateTime @default(now())
-  published Boolean  @default(false)
-  authorId  Int
-*/
 
 const createNewPost = async (req,res) => {
     const {title,content, authorId, categoryId} = req.body

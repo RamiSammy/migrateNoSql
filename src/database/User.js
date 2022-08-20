@@ -1,16 +1,11 @@
 const mongoose = require("mongoose")
 const {userModel} = require('../modules/modules.js')
 
-
 const getAllUsers = async ()=>{
 
     try{
-
-
         const users = await userModel.find()
         return users
-
-
     }catch(err)
     {
         console.log(err)

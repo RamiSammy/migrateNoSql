@@ -1,7 +1,5 @@
 const categoryServices = require('../services/categoryServices.js')
 
-const {isNumber} = require('../regex/regex.js')
-
 const createNewCategory = async (req,res) => {
 
     const name = req.body.name
