@@ -7,15 +7,15 @@ async function mostrarCategorias() {
     const categorias = await categoryModel.find()
     console.log(categorias)
 }
-mostrarCategorias()
+//mostrarCategorias()
 
 
-///Codigo viejo del tp3, modificarlo con mongoDB
-function readCategories()
+
+async function readCategories()
 {
     try
     {
-        const obtained = prisma.category.findMany()
+        const obtained = categoryModel.find()
         return obtained
     }catch(err)
     {
@@ -23,13 +23,15 @@ function readCategories()
     }
 }
 
-function createNewCategory(newCategory)
+async function createNewCategory(newCategory)
 {
     try
     {
-        const added = prisma.category.create({
-            data: newCategory
-        })
+        const added = await categoryModel.create(
+            {
+                name: newCategory.name
+            }
+        )
     
         return added
     }catch(err)
@@ -38,17 +40,11 @@ function createNewCategory(newCategory)
     }
 }
 
-function updateCategory(idCategory, newData)
+async function updateCategory(idCategory, newData)
 {
     try
     {
-        const updated = prisma.category.update({
-            where: {
-                id: idCategory
-            },
-            data: newData
-        })
-
+        const updated = await categoryModel.findByIdAndUpdate(idCategory , newData)
         return updated
     }catch(err)
     {
@@ -56,15 +52,11 @@ function updateCategory(idCategory, newData)
     }
 }
 
-function deleteCategory(idCategory)
+async function deleteCategory(idCategory)
 {
     try
     {
-        const deleted = prisma.category.delete({
-            where: {
-                id: idCategory
-            }
-        })
+        const deleted = await categoryModel.findByIdAndRemove(idCategory)
 
         return deleted
     }catch(err)
@@ -76,26 +68,7 @@ function deleteCategory(idCategory)
 const getOneCategory = async (idCategory)=>{
 
     try{
-        const oneCategory = await prisma.category.findUnique({
-            where: {
-                id: idCategory
-            },
-            include: {
-                //posts: true
-                posts: {
-                    select : {
-                        id : true, 
-                        title : true ,
-                        content : true , 
-                        createdAt : true , 
-                        published : true , 
-                        categoryId : true
-                    }
-                }
-                
-            }
-        })
-
+        const oneCategory = await categoryModel.findById(idCategory).exec()
         return oneCategory
     }
     catch(err)

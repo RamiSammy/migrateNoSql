@@ -3,8 +3,8 @@ const {userModel} = require('../modules/modules.js')
 
 async function mostrarUsuarios() {
     const usuarios = await userModel.aggregate([{$lookup: {from: 'posts', localField: '_id', foreignField: 'authorId', as: 'posts'}}])
-    console.log(usuarios[0])
-    console.log(usuarios[0].posts)
+   // console.log(usuarios[0])
+   // console.log(usuarios[0].posts)
 }
 mostrarUsuarios()
 
@@ -12,7 +12,7 @@ const getAllUsers = async ()=>{
 
     try{
 
-        const allUsers = await prisma.user.findMany()
+        const allUsers = await userModel.find()
         return allUsers
 
     }catch(err)
@@ -25,15 +25,7 @@ const getAllUsers = async ()=>{
 const getOneUser = async (userId)=>{
 
     try{
-        const user = await prisma.user.findUnique({
-            where: {
-                id: userId
-            },
-            include: {
-                posts: true
-            }
-        })
-
+        const user = await userModel.findById(userId).exec()
         return user
     }
     catch(err)
@@ -42,13 +34,20 @@ const getOneUser = async (userId)=>{
     }
 }
 
+
 const createNewUser = async (newUser)=>{
     try
     {
 
-    const added = await prisma.user.create({
-        data: newUser
-    })
+    const added = await userModel.create(
+        {
+            name : newUser.name ,
+            email : newUser.email , 
+            age : newUser.age ,
+            country : newUser.country,
+            rol :  newUser.rol
+        }
+        )
 
     return added
 
@@ -58,15 +57,12 @@ const createNewUser = async (newUser)=>{
     }   
 }
 
+
 const deleteUser = async (User) => {
     try
     {
     
-        const deleteUser = await prisma.user.delete({
-            where: {
-              id : Number(User),
-            },
-          })
+        const deleteUser = await userModel.findByIdAndRemove(User)
           
         return deleteUser
     } 
@@ -79,12 +75,7 @@ const deleteUser = async (User) => {
 const updateUser = async (User , newData) => {
     try
     {
-        const updateUser = await prisma.user.update({
-            where: {
-              id : Number(User),
-            },
-            data : newData
-          })
+        const updateUser = await userModel.findByIdAndUpdate(User , newData )
           
         return updateUser
     } 
@@ -100,4 +91,5 @@ module.exports={
     createNewUser,
     deleteUser, 
     updateUser
+    
 }

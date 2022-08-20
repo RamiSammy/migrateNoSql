@@ -60,7 +60,7 @@ const getOneUser = async (req,res) => {
     }
     else
     {
-        const obtained = await userServices.getOneUser(Number(id))
+        const obtained = await userServices.getOneUser(id)
         
         if(obtained!==undefined)
         {

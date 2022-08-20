@@ -59,7 +59,7 @@ const updateCategory = async (req,res)=>
             name
         }
 
-        const updated = await categoryServices.updateCategory(Number(id), newData)
+        const updated = await categoryServices.updateCategory(id, newData)
 
         if(updated!==undefined)
         {
@@ -82,7 +82,7 @@ const deleteCategory = async (req,res)=>
     }
     else
     {
-        const deleted = await categoryServices.deleteCategory(Number(id))
+        const deleted = await categoryServices.deleteCategory(id)
 
         if(deleted!==undefined)
         {
@@ -98,7 +98,7 @@ const deleteCategory = async (req,res)=>
 const getOneCategory = async (req,res) => {
     const id = req.params.id
 
-    const obtained = await categoryServices.getOneCategory(Number(id))
+    const obtained = await categoryServices.getOneCategory(id)
 
     if(obtained!==undefined)
     {

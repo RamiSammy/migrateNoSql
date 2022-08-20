@@ -7,11 +7,11 @@ async function mostrarPosts() {
     const posts = await postModel.findOne().populate('authorId')
     console.log(posts)
 }
-mostrarPosts()
+//mostrarPosts()
 
 const getAllPost = async () =>  {
     try {
-        const allPost = await prisma.post.findMany()
+        const allPost = await postModel.find()
         return allPost
     } 
     catch(err) 
