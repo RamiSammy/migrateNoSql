@@ -87,7 +87,9 @@ const updateUser = async (req, res) => {
         .status(400)
         .json({ message: `ERROR: Al editar un usuario de la base de datos` });
     } else {
-      res.status(200).json({ message: "Usuario actualizado con éxito!" });
+      res
+        .status(200)
+        .json({ message: "Usuario actualizado con éxito!", data: updateUser });
     }
   }
 };
@@ -107,7 +109,9 @@ const deleteUser = async (req, res) => {
         .status(400)
         .json({ message: `ERROR: Al eliminar un usuario de la base de datos` });
     } else {
-      res.status(200).json({ message: "Usuario borrado con éxito!" });
+      res
+        .status(200)
+        .json({ message: "Usuario borrado con éxito!", data: deleteUser });
     }
   }
 };
