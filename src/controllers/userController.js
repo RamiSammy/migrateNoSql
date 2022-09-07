@@ -82,7 +82,7 @@ const updateUser = async (req, res) => {
     const updateUser = await userServices.updateUser(id, newData);
     console.log(updateUser);
 
-    if (deleteUser === undefined) {
+    if (updateUser === undefined) {
       res
         .status(400)
         .json({ message: `ERROR: Al editar un usuario de la base de datos` });
